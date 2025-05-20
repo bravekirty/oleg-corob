@@ -2,6 +2,12 @@
 
 <link rel="stylesheet" href="{% static 'css/includes/footer.css' %}">
 
+<div class="running-line-container">
+  <div class="running-line">
+    <span>IF A ONE-HUNDRED-PERCENT PROBABILITY EXISTS, THEN IT IS ACHIEVABLE</span>
+  </div>
+</div>
+
 <footer class="figma-footer">
   <div class="footer-container">
     <!-- Branding -->
@@ -47,3 +53,19 @@
     </div>
   </div>
 </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const runningLine = document.querySelector('.running-line');
+  const text = runningLine.innerHTML;
+
+  // Duplicate content enough times to fill screen
+  runningLine.innerHTML = text.repeat(10);
+
+  // Calculate animation duration based on text width
+  const textWidth = runningLine.scrollWidth / 10;
+  const duration = textWidth / 10; // Adjust speed (50px per second)
+
+  runningLine.style.animationDuration = `${duration}s`;
+});
+</script>

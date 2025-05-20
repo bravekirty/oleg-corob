@@ -4,13 +4,6 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/articles/list.css' %}">
 
-<div class="newspaper-header">
-  <h1 class="newspaper-title">Cases</h1>
-</div>
-
-<img class="bg-logo1" src="{% static 'img/logo.png' %}" alt="">
-<img class="bg-logo2" src="{% static 'img/logo.png' %}" alt="">
-
 <!-- Articles Grid -->
 <div class="newspaper-articles-grid">
   {% for article in articles %}
@@ -66,47 +59,54 @@
   <div class="filter-grid">
     <!-- Search -->
     <div class="filter-group">
-      <input type="text" name="search" class="filter-input"
-             placeholder="Search articles..." value="{{ current_filters.search }}">
+      <label for="search-input" class="filter-label">Search Articles</label>
+      <input type="text" name="search" id="search-input" class="filter-input"
+             placeholder="Enter keywords..." value="{{ current_filters.search }}">
     </div>
 
     <!-- Language -->
     <div class="filter-group">
-      <select name="language" class="filter-select" multiple>
+      <label for="language-select" class="filter-label">Filter by Language</label>
+      <select name="language" id="language-select" class="filter-select" multiple>
         {% for code, name in LanguageChoices %}
           <option value="{{ code }}" {% if code in current_filters.languages %}selected{% endif %}>
             {{ name }}
           </option>
         {% endfor %}
       </select>
+      <span class="filter-hint">(Hold Ctrl/Cmd to select multiple)</span>
     </div>
 
     <!-- Topic -->
     <div class="filter-group">
-      <select name="topic" class="filter-select" multiple>
+      <label for="topic-select" class="filter-label">Filter by Topic</label>
+      <select name="topic" id="topic-select" class="filter-select" multiple>
         {% for code, name in TopicChoices %}
           <option value="{{ code }}" {% if code in current_filters.topics %}selected{% endif %}>
             {{ name }}
           </option>
         {% endfor %}
       </select>
+      <span class="filter-hint">(Hold Ctrl/Cmd to select multiple)</span>
     </div>
 
     <!-- Date Range -->
     <div class="filter-group date-range">
+      <label class="filter-label">Date Range</label>
       <div class="date-inputs">
-        <span class="date-prefix">From</span>
-        <input type="date" name="date_from" class="filter-date"
+        <label for="date-from" class="date-label">From</label>
+        <input type="date" name="date_from" id="date-from" class="filter-date"
                value="{{ current_filters.date_from }}">
-        <span class="date-separator">to</span>
-        <input type="date" name="date_to" class="filter-date"
+        <label for="date-to" class="date-label">To</label>
+        <input type="date" name="date_to" id="date-to" class="filter-date"
                value="{{ current_filters.date_to }}">
       </div>
     </div>
 
     <!-- Sort -->
     <div class="filter-group">
-      <select name="sort" class="filter-select">
+      <label for="sort-select" class="filter-label">Sort By</label>
+      <select name="sort" id="sort-select" class="filter-select">
         <option value="-created_at" {% if current_filters.sort == '-created_at' %}selected{% endif %}>
           Newest First
         </option>

@@ -55,6 +55,7 @@
 
 .newspaper-article {
   break-inside: avoid;
+  margin-top: 50px;
   margin-bottom: 2rem;
 }
 
@@ -121,4 +122,59 @@
   .bg-logo {
       right: 0;
     }
+}
+
+.newspaper-article {
+  display: flex;
+  justify-content: space-between;
+}
+
+.newspaper-article-card {
+  width: 211px;
+  height: 124px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This pushes content to top and bottom */
+}
+
+.read-more {
+  text-decoration: none;
+}
+
+.article-title {
+  font-family: "Anton", sans-serif;
+  font-size: 15px;
+  color: #000;
+  margin: 0; /* Remove default margins */
+}
+
+.article-date {
+  font-family: "Abel", sans-serif;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.75);
+  margin-top: auto; /* Pushes date to bottom */
+}
+
+.interesting {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.block-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.interesting {
+  font-family: "Abel", sans-serif;
+}
+
+.interesting .block-1 h2 {
+  font-size: 40px;
+}
+
+.interesting .block-2 h2 {
+  font-size: 20px;
 }

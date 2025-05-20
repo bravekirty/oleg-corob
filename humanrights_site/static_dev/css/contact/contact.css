@@ -1,8 +1,9 @@
 /* Contact Header */
 .newspaper-contact-header {
-  border-bottom: 3px double #000;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
+  border: 1px solid #8E8E8E;
+  border-radius: 45px;
+  margin: 100px auto 2rem;
+  padding: 1rem;
   text-align: center;
 }
 
@@ -16,10 +17,9 @@
 }
 
 .newspaper-section-subtitle {
-  font-family: "Luxurious Roman", serif;
-  font-style: italic;
+  margin: 0;
+  font-family: "Kelly Slab", sans-serif;
   font-size: 1.2rem;
-  color: #555;
 }
 
 /* Contact Form */
@@ -27,14 +27,12 @@
   max-width: 800px;
   margin: 0 auto 3rem;
   padding: 1.5rem;
-  background-color: #f9f9f5;
-  border: 1px solid #ddd;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 10px;
 }
 
 .form-group {
@@ -46,9 +44,8 @@
 }
 
 .form-label {
-  font-family: "Kelly Slab", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 0.9rem;
-  text-transform: uppercase;
   display: block;
   margin-bottom: 0.5rem;
   color: #333;
@@ -58,11 +55,17 @@
 .subject-select,
 .form-textarea {
   width: 100%;
-  padding: 0.5rem;
-  font-family: "Kelly Slab", sans-serif;
+  padding: 20px 15px;
+  font-family: "Inter", sans-serif;
   border: 1px solid #000;
+  border-radius: 8px;
   background-color: #fff;
   box-sizing: border-box;
+}
+
+.form-input[name="email"] {
+  background-color: #000;
+  color: #fff;
 }
 
 .form-input,
@@ -71,11 +74,17 @@
 }
 
 .form-textarea {
-  min-height: 150px;
+  min-height: 100px;
   max-height: 350px;
+  height: 100px;
   resize: vertical;
   line-height: 1.5;
 }
+
+.form-submit {
+    grid-column: span 1;
+    text-align: center;
+  }
 
 .subject-select {
   appearance: none;
@@ -181,16 +190,22 @@
   }
 }
 
+.form-submit {
+  grid-column: span 2;
+}
+
 .submit-button {
   padding: 0.75rem 1.5rem;
-  font-family: "Kelly Slab", sans-serif;
-  background-color: #000;
-  color: white;
-  border: none;
+  font-family: "Inter", sans-serif;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 8px;
+  color: #000;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .submit-button:hover {

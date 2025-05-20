@@ -3,30 +3,34 @@
 <link rel="stylesheet" href="{% static 'css/includes/header.css' %}">
 
 <header class="site-header">
+    <img class="logo" src="{% static 'img/logo.png' %}">
     <div class="header-top">
-        <div class="header-title">RDE</div>
-        <div class="header-actions">
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <button class="search-toggle" aria-label="Toggle search">🔍</button>
-        </div>
+        <div class="header-brown"></div>
+        <div class="header-green"></div>
+        <div class="header-gray"></div>
     </div>
 
-    <nav class="main-nav">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about/">About</a></li>
-            <li><a href="/articles/">Articles</a></li>
-            <li><a href="/contact/">Contact</a></li>
-            <li><a href="/admin/">Admin</a></li>
-        </ul>
+    <div class="header-bottom">
+        <div class="header-box">
+            <h1 class="header-title">{{ pageTitle }}</h1>
 
-        <div class="search-bar">
-            <form action="/search/" method="get">
-                <input type="text" name="q" placeholder="Search the archives...">
-                <button type="submit">Search</button>
-            </form>
+            <!-- Navigation container with decorative elements -->
+            <div class="nav-container">
+                <img class="leafs1" src="{% static 'img/leafs1.png' %}">
+                <nav class="main-nav">
+                    <ul>
+                        <li><img class="language" src="{% static 'img/language.png' %}"></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/articles/">Articles</a></li>
+                        <li><a href="#" style="color: gray;">Cases</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                        <li><a href="/admin/">Admin</a></li>
+                    </ul>
+                </nav>
+                <img class="leafs2" src="{% static 'img/leafs2.png' %}">
+            </div>
         </div>
-    </nav>
+    </div>
 </header>
 
 <script src="{% static 'js/includes/header.js' %}"></script>

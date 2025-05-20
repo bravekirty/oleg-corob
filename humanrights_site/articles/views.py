@@ -14,7 +14,7 @@ class ArticleListView(django.views.generic.ListView):
     model = Article
     template_name = "articles/list.html"
     context_object_name = "articles"
-    paginate_by = 2
+    paginate_by = 1
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -70,6 +70,7 @@ class ArticleListView(django.views.generic.ListView):
         }
         context['LanguageChoices'] = [(choice.value, choice.label) for choice in Article.LanguageChoices]
         context['TopicChoices'] = [(choice.value, choice.label) for choice in Article.TopicChoices]
+        context['pageTitle'] = "Articles"
         return context
 
 

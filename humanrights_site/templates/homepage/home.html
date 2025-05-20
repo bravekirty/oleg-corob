@@ -3,29 +3,33 @@
 
 {% block content %}
   <link rel="stylesheet" href="{% static 'css/homepage/home.css' %}">
-
-  <!-- Newspaper Header Section -->
-  <div class="newspaper-header">
-    <h1 class="newspaper-title">About us</h1>
-  </div>
-  <p class="newspaper-subhead">IF A ONE-HUNDRED-PERCENT PROBABILITY EXISTS, THEN IT IS ACHIEVABLE</p>
-
-  <div class="d-flex justify-content-end">
-    <div class="sub-box">
-      <h2 class="newspaper-sub-title">PROTECTING HUMAN RIGHTS</h2>
-      <p class="newspaper-sub-subhead">DEFENDING RIGHTS AND FREEDOM AROUND THE WORLD</p>
-    </div>
-  </div>
-
-  <img class="bg-logo" src="{% static 'img/logo.png' %}" alt="">
   <!-- Main Content -->
   <article class="newspaper-article">
-    <div class="article-body">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam feugiat nulla et porta porttitor. Praesent magna nulla, gravida a ornare vel, eleifend quis nisi. In commodo lectus libero, a fringilla risus consectetur quis. Mauris ornare, sapien sit amet dignissim aliquam, nibh magna sagittis odio, non lobortis nisi est vitae diam. Praesent pellentesque, turpis a scelerisque blandit, ligula neque faucibus nisi, ut condimentum turpis diam dictum lorem.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam feugiat nulla et porta porttitor. Praesent magna nulla, gravida a ornare vel, eleifend quis nisi. In commodo lectus libero, a fringilla risus consectetur quis. Mauris ornare, sapien sit amet dignissim aliquam, nibh magna sagittis odio, non lobortis nisi est vitae diam. Praesent pellentesque, turpis a scelerisque blandit, ligula neque faucibus nisi, ut condimentum turpis diam dictum lorem.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam feugiat nulla et porta porttitor. Praesent magna nulla, gravida a ornare vel, eleifend quis nisi. In commodo lectus libero, a fringilla risus consectetur quis. Mauris ornare, sapien sit amet dignissim aliquam, nibh magna sagittis odio, non lobortis nisi est vitae diam.
-        </p>
-      </div>
+    {% for article in articles %}
+    <article class="newspaper-article-card">
+      <a href="{% url 'articles:article-detail' article.pk %}" class="read-more">
+        <h2 class="article-title">{{ article.content|safe|striptags|truncatewords:18 }}</h2>
+      </a>
+      <p class="article-date">{{ article.created_at|timesince }} ago</p>
+    </article>
+    {% endfor %}
   </article>
+
+  <article class="interesting">
+    <div class="block-1">
+      <h2>What are Slovenian cops doing during their free time?</h2>
+      <p>Best donuts are sold in America meanwhile, in Italy the only alternative if “Coffee|Joint” which would be great. However cops prefer to avoid that place because of it’s nominative. It triggers jealousy as their farewell to a happy future</p>
+    </div>
+    <div class="block-2">
+      <div class="block-21">
+        <h2>Why Slovenian police exists if it has no use?</h2>
+        <p>This question is less philosophical then practical. Even though useless things such as slime, Tick-tock, Us dollar exist they still bring somewhat profit. Meanwhile Slovenian police brings only donuts to their station.</p>
+      </div>
+      <div class="block-22">
+        <h2>Police in Nova Gorica are not payed enough</h2>
+        <p>They have to steal from poor citizens. Well if they did not have enough money they could just ask...</p>
+      </div>
+    </div>
+  </article>
+
 {% endblock %}

@@ -1,7 +1,7 @@
 /* Figma Style Footer */
 .figma-footer {
   background-color: #fff;
-  border-top: 23px solid #B28C58;
+  border-top: 1px solid #828282;
   padding: 2rem 0;
   font-family: "Kelly Slab", sans-serif;
 }
@@ -87,3 +87,36 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.running-line-container {
+  width: 100%;
+  overflow: hidden;
+  background: transparent; /* Or set your footer background color */
+  white-space: nowrap;
+  margin-bottom: 5px;
+}
+
+.running-line {
+  display: inline-block;
+  padding-left: 100%; /* Start off-screen */
+  animation: running-line 60s linear infinite;
+}
+
+.running-line span {
+  font-size: 15px;
+  color: #8B8661;
+  font-family: "Luxurious Roman", serif; /* Or your preferred font */
+  padding-right: 50px; /* Space between repetitions */
+}
+
+@keyframes running-line {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
