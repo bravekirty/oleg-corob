@@ -21,7 +21,7 @@ html {
 /* Article cards */
 .article-card {
   width: 13.1875rem; /* 211px / 16 = 13.1875rem */
-  height: 7.75rem; /* 124px / 16 = 7.75rem */
+  height: 10.75rem; /* 124px / 16 = 7.75rem */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
