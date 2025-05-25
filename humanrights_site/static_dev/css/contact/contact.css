@@ -1,10 +1,14 @@
 /* Contact Header */
 .newspaper-contact-header {
-  border: 1px solid #8E8E8E;
-  border-radius: 45px;
-  margin: 100px auto 2rem;
   padding: 1rem;
   text-align: center;
+}
+
+.site-logo {
+  height: 16.9375rem;
+  width: 16.9375rem;/* 271px / 16 = 16.9375rem */
+  display: block;
+  margin: -2rem auto;
 }
 
 .newspaper-section-title {
@@ -18,7 +22,7 @@
 
 .newspaper-section-subtitle {
   margin: 0;
-  font-family: "Kelly Slab", sans-serif;
+  font-family: "abel", sans-serif;
   font-size: 1.2rem;
 }
 

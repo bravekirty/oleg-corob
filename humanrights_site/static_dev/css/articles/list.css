@@ -1,57 +1,77 @@
-/* Inherit base newspaper styles */
-
-body {
-  overflow-x: hidden;
+.articles-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 3.125rem 0 2rem; /* 50px / 16 = 3.125rem */
+  font-family: 'abel', sans-serif;
 }
 
-.newspaper-header {
-  border-bottom: 1px solid #000;
+.site-logo {
+  height: 16.9375rem;
+  width: 16.9375rem;/* 271px / 16 = 16.9375rem */
+  margin-top: -4.5rem; /* -50px / 16 = -3.125rem */
 }
 
-.newspaper-title {
+/* Article cards */
+.article-card {
+  width: 13.1875rem; /* 211px / 16 = 13.1875rem */
+  height: 7.75rem; /* 124px / 16 = 7.75rem */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1.25rem; /* 20px / 16 = 1.25rem */
+}
+
+.article-title {
+  font-family: 'abel-bold', sans-serif;
+  font-size: 1.5rem; /* 24px equivalent */
+  color: #000;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.article-link {
+  text-decoration: none;
+}
+
+.article-meta {
+  font-family: 'abel', sans-serif;
+  font-size: 1rem; /* 16px equivalent */
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* Articles Grid */
+.newspaper-articles-grid {
+  padding: 50px;
+  border: 1px solid #8E8E8E;
+  border-radius: 45px;
+  margin-top: 50px;
+}
+
+.newspaper-article-card {
+  margin-bottom: 2rem;
+}
+
+.newspaper-article-title {
   font-family: "Kelly Slab", sans-serif;
-  font-size: 3rem;
-  font-weight: 400;
-  margin: -0.6rem 0 0.4rem;
-  letter-spacing: 1px;
+  color: #000;
+  font-size: 1.3rem;
+  margin: 0.5rem 0 1rem;
+  line-height: 1.3;
+  text-align: center;
 }
 
-.newspaper-sub-title {
-  font-family: "Kelly Slab", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0;
-  margin-top: 26px;
-}
-
-.newspaper-sub-subhead {
+.article-excerpt {
   font-family: "Luxurious Roman", serif;
   font-size: 1rem;
-  font-weight: 400;
-  font-style: normal;
-  margin: 0 0 1rem;
-  color: #000;
+  line-height: 1.5;
+  color: #333;
+  margin-bottom: 1.5rem;
 }
 
-.bg-logo1 {
-  z-index: 1;
-  opacity: 26%;
-  width: 870px;
-  height: 870px;
-  position: absolute;
-  left: -435px;
-}
-
-.bg-logo2 {
-  z-index: 1;
-  opacity: 26%;
-  width: 870px;
-  height: 870px;
-  position: absolute;
-  right: -435px;
-  top: 600px;
+.read-more {
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Filter Form */
@@ -86,6 +106,10 @@ body {
   box-sizing: border-box;
 }
 
+#search-input {
+  min-height: 100px;
+}
+
 .filter-select {
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -107,12 +131,6 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.date-prefix,
-.date-separator {
-  font-family: "Inter", sans-serif;
-  font-style: italic;
 }
 
 .filter-buttons {
@@ -141,7 +159,6 @@ body {
   text-decoration: none;
 }
 
-/* Label Styles */
 .filter-label {
   display: block;
   font-family: "Inter", sans-serif;
@@ -166,108 +183,7 @@ body {
   font-style: italic;
 }
 
-/* Adjust existing styles for better label integration */
-.filter-group {
-  margin-bottom: 20px;
-}
-
-.date-inputs {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-}
-
-.filter-date {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-/* Articles Grid */
-.newspaper-articles-grid {
-  padding: 50px;
-  border: 1px solid #8E8E8E;
-  border-radius: 45px;
-  margin-top: 50px;
-}
-
-.article-meta {
-  font-family: "Kelly Slab", sans-serif;
-  font-size: 0.8rem;
-  color: #666;
-  margin-bottom: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-.article-title {
-  font-family: "Kelly Slab", sans-serif;
-  color: #000;
-  font-size: 1.3rem;
-  margin: 0.5rem 0 1rem;
-  line-height: 1.3;
-  text-align: center;
-}
-
-.article-excerpt {
-  font-family: "Luxurious Roman", serif;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #333;
-  margin-bottom: 1.5rem;
-}
-
-.read-more {
-  text-decoration: none;
-}
-
-.read-more .arrow {
-  margin-left: 0.3rem;
-  transition: transform 0.3s ease;
-}
-
-.read-more:hover .arrow {
-  transform: translateX(3px);
-}
-
 /* Pagination */
-.newspaper-pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid #ddd;
-  font-family: "Kelly Slab", sans-serif;
-}
-
-.pagination-info {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.pagination-links {
-  display: flex;
-  gap: 1rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.pagination-link {
-  text-decoration: none;
-  color: #000;
-  padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
-  transition: all 0.3s ease;
-}
-
-.pagination-link:hover {
-  background-color: #000;
-  color: white;
-}
-
-/* Figma Style Pagination */
 .figma-pagination {
   display: flex;
   justify-content: center;
@@ -281,7 +197,6 @@ body {
   gap: 0.5rem;
 }
 
-/* Arrows */
 .pagination-arrow {
   display: flex;
   align-items: center;
@@ -306,7 +221,6 @@ body {
   cursor: not-allowed;
 }
 
-/* Page Numbers */
 .pagination-numbers {
   display: flex;
   gap: 0.25rem;
@@ -348,6 +262,14 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .date-range {
+    grid-column: span 1;
+  }
+
   .pagination-numbers {
     gap: 0.1rem;
   }
@@ -357,32 +279,5 @@ body {
     width: 28px;
     height: 28px;
     font-size: 0.8rem;
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .filter-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .date-range {
-    grid-column: span 1;
-  }
-
-  .newspaper-articles-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .bg-logo1 {
-    width: 600px;
-    height: 600px;
-    left: -300px;
-  }
-
-  .bg-logo2 {
-    width: 600px;
-    height: 600px;
-    right: -300px;
   }
 }

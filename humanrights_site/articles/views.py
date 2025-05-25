@@ -71,6 +71,7 @@ class ArticleListView(django.views.generic.ListView):
         context['LanguageChoices'] = [(choice.value, choice.label) for choice in Article.LanguageChoices]
         context['TopicChoices'] = [(choice.value, choice.label) for choice in Article.TopicChoices]
         context['pageTitle'] = "Articles"
+        context['latest'] = super().get_queryset().order_by('-created_at')[:3]
         return context
 
 

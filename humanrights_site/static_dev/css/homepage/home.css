@@ -1,180 +1,127 @@
-.container {
-  position: relative;
+/* Base font size for desktop (assuming 16px base) */
+html {
+  font-size: 16px;
 }
 
-/* Base Newspaper Styling */
-.newspaper-header {
-  border-bottom: 1px solid #000;
-}
-
-.newspaper-title {
-  font-family: "Kelly Slab", sans-serif;
-  font-size: 3rem;
-  font-weight: 400;
-  margin: -1rem 0 0.4rem;
-  letter-spacing: 1px;
-}
-
-.newspaper-subhead {
-  font-family: "Luxurious Roman", serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  margin: 0;
-  color: #D5D3C3;
-}
-
-.newspaper-sub-title {
-  font-family: "Kelly Slab", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0;
-  margin-top: 26px;
-}
-
-.newspaper-sub-subhead {
-  font-family: "Luxurious Roman", serif;
-  font-size: 1rem;
-  font-weight: 400;
-  font-style: normal;
-  margin: 0 0 1rem;
-  color: #000;
-}
-
-.newspaper-date {
-  font-family: "Kelly Slab", sans-serif;
-  font-size: 1rem;
-  margin: 0.5rem 0 0;
-}
-
-.newspaper-subheader {
-  font-family: "Kelly Slab", sans-serif;
-  font-size: 0.9rem;
-}
-
-.newspaper-article {
-  break-inside: avoid;
-  margin-top: 50px;
-  margin-bottom: 2rem;
-}
-
-.article-headline {
-  font-family: "Kelly Slab", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  line-height: 1.2;
-}
-
-.article-subhead {
-  font-family: "Luxurious Roman", serif;
-  font-size: 1.1rem;
-  font-weight: 400;
-  font-style: normal;
-  margin: 0 0 1rem;
-  color: #444;
-}
-
-.article-body {
-  font-family: "Kelly Slab", sans-serif;
-  font-size: 1rem;
-  text-align: justify;
-  hyphens: auto;
-  margin-top: 20px;
-}
-
-.article-body p {
-  max-width: 520px;
-  z-index: 2;
-  margin: 0 0 1rem;
-  color: #000000BF;
-}
-
-.bg-logo {
-  z-index: 1;
-  opacity: 26%;
-  width: 412px;
-  height: 412px;
-  position: absolute;
-  right: -130px;
-}
-
-.newspaper-footer {
-  font-family: "Kelly Slab", sans-serif;
-  font-size: 0.8rem;
-  border-top: 1px solid #000;
-  padding-top: 1rem;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .newspaper-content {
-    column-count: 1;
-  }
-
-  .newspaper-title {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 1200px) {
-  .bg-logo {
-      right: 0;
-    }
-}
-
-.newspaper-article {
+/* Main container */
+.articles-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  margin: 3.125rem 0 2rem; /* 50px / 16 = 3.125rem */
+  font-family: 'abel', sans-serif;
 }
 
-.newspaper-article-card {
-  width: 211px;
-  height: 124px;
+.site-logo {
+  height: 16.9375rem;
+  width: 16.9375rem;/* 271px / 16 = 16.9375rem */
+  margin-top: -4.5rem; /* -50px / 16 = -3.125rem */
+}
+
+/* Article cards */
+.article-card {
+  width: 13.1875rem; /* 211px / 16 = 13.1875rem */
+  height: 7.75rem; /* 124px / 16 = 7.75rem */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* This pushes content to top and bottom */
-}
-
-.read-more {
-  text-decoration: none;
+  justify-content: space-between;
+  margin-bottom: 1.25rem; /* 20px / 16 = 1.25rem */
 }
 
 .article-title {
-  font-family: "Anton", sans-serif;
-  font-size: 15px;
+  font-family: 'abel-bold', sans-serif;
+  font-size: 1.5rem; /* 24px equivalent */
   color: #000;
-  margin: 0; /* Remove default margins */
+  margin: 0;
+  line-height: 1.3;
 }
 
-.article-date {
-  font-family: "Abel", sans-serif;
-  font-size: 15px;
+.article-link {
+  text-decoration: none;
+}
+
+.article-meta {
+  font-family: 'abel', sans-serif;
+  font-size: 1rem; /* 16px equivalent */
   color: rgba(0, 0, 0, 0.75);
-  margin-top: auto; /* Pushes date to bottom */
 }
 
-.interesting {
+/* Featured articles section */
+.featured-articles {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 1.25rem; /* 20px / 16 = 1.25rem */
+  font-family: 'abel', sans-serif;
 }
 
-.block-2 {
+.featured-main h2,
+.featured-item h2 {
+  font-family: 'abel-bold', sans-serif;
+  line-height: 1.3;
+}
+
+.featured-main {
+  flex: 1;
+}
+
+.featured-main h2 {
+  font-size: 3.5rem; /* 56px equivalent */
+  margin-bottom: 1rem;
+}
+
+.featured-main p {
+  font-size: 1.25rem; /* 20px equivalent */
+  line-height: 1.5;
+}
+
+.featured-secondary {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 1;
+  gap: 1.25rem; /* 20px / 16 = 1.25rem */
 }
 
-.interesting {
-  font-family: "Abel", sans-serif;
+.featured-item h2 {
+  font-size: 2rem; /* 32px equivalent */
+  margin-bottom: 0.75rem;
 }
 
-.interesting .block-1 h2 {
-  font-size: 40px;
+.featured-item p {
+  font-size: 1.125rem; /* 18px equivalent */
+  line-height: 1.5;
 }
 
-.interesting .block-2 h2 {
-  font-size: 20px;
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* Smaller base size for mobile */
+  }
+
+  .articles-container {
+    flex-direction: column;
+  }
+
+  .article-card {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .featured-articles {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .featured-main h2 {
+    font-size: 2.5rem; /* Scales down from 56px to ~35px */
+  }
+
+  .featured-item h2 {
+    font-size: 1.5rem; /* Scales down from 32px to ~21px */
+  }
+
+  .article-title {
+    font-size: 1.25rem; /* Scales down from 24px to ~17.5px */
+  }
 }

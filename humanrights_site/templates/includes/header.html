@@ -2,15 +2,14 @@
 
 <link rel="stylesheet" href="{% static 'css/includes/header.css' %}">
 
+<img class="language" src="{% static 'img/language.png' %}">
 <header class="site-header">
-    <img class="logo" src="{% static 'img/logo.png' %}">
     <div class="header-top">
         <div class="header-brown"></div>
         <div class="header-green"></div>
-        <div class="header-gray"></div>
     </div>
 
-    <div class="header-bottom">
+    <div class="header-bottom container">
         <div class="header-box">
             <h1 class="header-title">{{ pageTitle }}</h1>
 
@@ -19,7 +18,6 @@
                 <img class="leafs1" src="{% static 'img/leafs1.png' %}">
                 <nav class="main-nav">
                     <ul>
-                        <li><img class="language" src="{% static 'img/language.png' %}"></li>
                         <li><a href="/">Home</a></li>
                         <li><a href="/articles/">Articles</a></li>
                         <li><a href="#" style="color: gray;">Cases</a></li>

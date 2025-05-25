@@ -4,12 +4,25 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/articles/list.css' %}">
 
+<section class="articles-container">
+  <img class="site-logo" src="{% static 'img/logo.png' %}">
+
+  {% for article in latest %}
+  <article class="article-card">
+    <a href="{% url 'articles:article-detail' article.pk %}" class="article-link">
+      <h2 class="article-title">{{ article.content|safe|striptags|truncatewords:10 }}</h2>
+    </a>
+    <p class="article-meta">{{ article.created_at|timesince }} ago</p>
+  </article>
+  {% endfor %}
+</section>
+
 <!-- Articles Grid -->
 <div class="newspaper-articles-grid">
   {% for article in articles %}
   <article class="newspaper-article-card">
     <a href="{% url 'articles:article-detail' article.pk %}" class="read-more">
-      <h2 class="article-title">{{ article.title|safe }}</h2>
+      <h2 class="newspaper-article-title">{{ article.title|safe }}</h2>
       <p class="article-excerpt">
         {{ article.content|safe|striptags|truncatewords:200 }}
       </p>
@@ -60,8 +73,13 @@
     <!-- Search -->
     <div class="filter-group">
       <label for="search-input" class="filter-label">Search Articles</label>
-      <input type="text" name="search" id="search-input" class="filter-input"
-             placeholder="Enter keywords..." value="{{ current_filters.search }}">
+      <textarea
+        name="search"
+        class="filter-input"
+        id="search-input"
+        placeholder="Search titles or content..."
+        rows="4"
+      >{{ current_filters.search }}</textarea>
     </div>
 
     <!-- Language -->
