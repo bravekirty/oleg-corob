@@ -5,7 +5,8 @@ import django.urls
 
 urlpatterns = [
     django.urls.path('', django.urls.include('homepage.urls')),
-    django.urls.path('articles/', django.urls.include('articles.urls')),
+    django.urls.path('publications/', django.urls.include('articles.urls')),
+    django.urls.path('documents/', django.urls.include('documents.urls')),
     django.urls.path('contact/', django.urls.include('contact.urls')),
     django.urls.path('admin/', admin.site.urls),
     django.urls.path('ckeditor5/', django.urls.include('django_ckeditor_5.urls')),

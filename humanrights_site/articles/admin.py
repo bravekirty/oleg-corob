@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Article, Attachment
+from articles.models import Article
+from documents.models import Attachment
 
 class AttachmentInline(admin.TabularInline):
     model = Attachment

@@ -40,7 +40,6 @@ class ArticleListView(django.views.generic.ListView):
         # 4. Date Range
         date_from = params.get('date_from')
         date_to = params.get('date_to')
-        print(date_from, date_to)
 
         if date_from:
             date_from = datetime.strptime(date_from, '%Y-%m-%d').date()
@@ -70,7 +69,7 @@ class ArticleListView(django.views.generic.ListView):
         }
         context['LanguageChoices'] = [(choice.value, choice.label) for choice in Article.LanguageChoices]
         context['TopicChoices'] = [(choice.value, choice.label) for choice in Article.TopicChoices]
-        context['pageTitle'] = "Articles"
+        context['pageTitle'] = "Publications"
         context['latest'] = super().get_queryset().order_by('-created_at')[:3]
         return context
 

@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'articles.apps.ArticlesConfig',
     'homepage.apps.HomepageConfig',
     'contact.apps.ContactConfig',
+    'documents.apps.DocumentsConfig',
     'django_ckeditor_5',
 ]
 

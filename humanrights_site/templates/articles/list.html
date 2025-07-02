@@ -10,7 +10,7 @@
   {% for article in latest %}
   <article class="article-card">
     <a href="{% url 'articles:article-detail' article.pk %}" class="article-link">
-      <h2 class="article-title">{{ article.content|safe|striptags|truncatewords:10 }}</h2>
+      <h2 class="article-title">{{ article.content|safe|striptags|truncatechars:65 }}</h2>
     </a>
     <p class="article-meta">{{ article.created_at|timesince }} ago</p>
   </article>

@@ -4,17 +4,21 @@
 {% block content %}
   <link rel="stylesheet" href="{% static 'css/homepage/home.css' %}">
 
-  <section class="articles-container">
+<section class="articles-container">
     <img class="site-logo" src="{% static 'img/logo.png' %}">
 
     {% for article in articles %}
     <article class="article-card">
       <a href="{% url 'articles:article-detail' article.pk %}" class="article-link">
-        <h2 class="article-title">{{ article.content|safe|striptags|truncatewords:10 }}</h2>
+        <h2 class="article-title">{{ article.content|safe|striptags|truncatechars:65 }}</h2>
       </a>
       <p class="article-meta">{{ article.created_at|timesince }} ago</p>
     </article>
     {% endfor %}
+
+    <div class="view-all-wrapper">
+        <a href="{% url 'articles:article-list' %}" class="view-all-button">View all publications</a>
+    </div>
   </section>
 
   <section class="featured-articles">

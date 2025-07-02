@@ -46,6 +46,28 @@ html {
   color: rgba(0, 0, 0, 0.75);
 }
 
+.view-all-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.view-all-button {
+    font-family: 'abel', sans-serif;
+    font-size: 1rem;
+    color: #000;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid #000;
+    border-radius: 4px;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.view-all-button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
 /* Featured articles section */
 .featured-articles {
   display: flex;
