@@ -1,34 +1,50 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/includes/header.css' %}">
+<link href="{% static 'css/includes/header.css' %}" rel="stylesheet">
 
-<img class="language" src="{% static 'img/language.png' %}">
+
+{% load static %}
 <header class="site-header">
-    <div class="header-top">
-        <div class="header-brown"></div>
-        <div class="header-green"></div>
-    </div>
-
-    <div class="header-bottom container">
-        <div class="header-box">
-            <h1 class="header-title">{{ pageTitle }}</h1>
-
-            <!-- Navigation container with decorative elements -->
-            <div class="nav-container">
-                <img class="leafs1" src="{% static 'img/leafs1.png' %}">
-                <nav class="main-nav">
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/publications/">Publications</a></li>
-                        <li><a href="/documents/">Documents</a></li>
-                        <li><a href="/contact/">Contact</a></li>
-                        <li><a href="/admin/">Admin</a></li>
-                    </ul>
-                </nav>
-                <img class="leafs2" src="{% static 'img/leafs2.png' %}">
+    <!-- Vertical Running Line (Mobile Only) -->
+    <div class="vertical-line-container mobile-only">
+        <div class="vertical-line-color"></div>
+        <div class="vertical-line-text">
+            <div class="scrolling-text">
+                IF A ONE-HUNDRED-PERCENT PROBABILITY EXISTS, THEN IT IS ACHIEVABLE •
+                IF A ONE-HUNDRED-PERCENT PROBABILITY EXISTS, THEN IT IS ACHIEVABLE •
             </div>
         </div>
     </div>
+
+    <nav class="navbar">
+        <!-- Mobile Burger Button -->
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+        </button>
+
+        <!-- Desktop Navigation -->
+        <ul class="desktop-nav">
+            <li><a href="{% url 'homepage:home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+            <li><a href="{% url 'articles:article-list' %}"
+                    class="{% if request.path == '/publications/' %}active{% endif %}">Publications</a></li>
+            <li><a href="{% url 'documents:all-attachments' %}"
+                    class="{% if request.path == '/documents/' %}active{% endif %}">Documents</a></li>
+            <li><a href="{% url 'contact:contact' %}"
+                    class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
+        </ul>
+
+        <!-- Mobile Navigation (Hidden by default) -->
+        <div class="mobile-nav">
+            <ul>
+                <li><a href="{% url 'homepage:home' %}">Home</a></li>
+                <li><a href="{% url 'articles:article-list' %}">Publications</a></li>
+                <li><a href="{% url 'documents:all-attachments' %}">Documents</a></li>
+                <li><a href="{% url 'contact:contact' %}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 </header>
 
 <script src="{% static 'js/includes/header.js' %}"></script>

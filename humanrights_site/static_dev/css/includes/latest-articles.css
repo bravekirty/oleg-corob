@@ -1,0 +1,234 @@
+/* static/css/components/latest_articles.css */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Abel&display=swap');
+
+/* Base Styles */
+.latest-articles-wrapper {
+    margin: 2rem 0;
+    box-sizing: border-box;
+}
+
+/* Card Styles - Consistent Across All Devices */
+.latest-article-card {
+    width: 210px;
+    /* Fixed card width */
+    height: 200px;
+    /* Fixed card height */
+    padding: 15px;
+    background: transparent;
+    position: relative;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    margin: 0 5px;
+    /* Small margin between cards */
+}
+
+.card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Text Styles */
+.article-title {
+    font-family: "Abril Fatface", serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 0 30px 0;
+    color: #333;
+    text-align: center;
+}
+
+.latest-article-card a {
+    text-decoration: none;
+}
+
+.article-meta {
+    font-family: "Abel", sans-serif;
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+    text-align: center;
+}
+
+/* Desktop Layout */
+.latest-articles-desktop {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.latest-articles-logo {
+    width: 300px;
+    margin: 0 -30px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.latest-articles-logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+.desktop-meta {
+    text-align: left;
+    /* Left align only on desktop */
+}
+
+/* Mobile Carousel Layout */
+.latest-articles-mobile-logo {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.latest-articles-mobile-logo img {
+    max-height: 80px;
+    width: auto;
+}
+
+.latest-articles-mobile {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    justify-content: center;
+}
+
+.latest-articles-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 210px;
+    /* Exactly one card width */
+    height: 100%;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.latest-articles-carousel .latest-article-card a {
+    scroll-snap-align: center;
+    display: flex;
+    height: 100%;
+    padding: 20px 0;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Arrow Styles */
+.carousel-arrow {
+    width: 40px;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.arrow-img {
+    width: 25px;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* Responsive Handling */
+@media (min-width: 768px) {
+
+    /* Desktop styles */
+    .latest-articles-desktop {
+        display: flex;
+    }
+
+    .latest-articles-mobile {
+        display: none;
+    }
+
+    .article-title {
+        text-align: left;
+        /* Left align titles on desktop */
+    }
+}
+
+@media (max-width: 767px) {
+
+    /* Mobile styles */
+    .latest-articles-desktop {
+        display: none;
+    }
+
+    .latest-articles-mobile {
+        display: flex;
+    }
+}
+
+/* Hide scrollbar and prevent selection */
+.latest-articles-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.latest-article-card {
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.2s ease;
+}
+
+/* Safe hover effects */
+@media (hover: hover) {
+    .latest-article-card:hover {
+        transform: translateY(-3px);
+    }
+}
+
+
+
+.desktop-running-line-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #EEE8A9;
+    /* Same as mobile */
+    padding: 8px 0;
+    margin-bottom: 5px;
+}
+
+.desktop-running-line {
+    display: inline-block;
+    padding-left: 100%;
+    animation: running-line 60s linear infinite;
+}
+
+.desktop-running-line span {
+    font-size: 15px;
+    color: #8B8661;
+    /* Same as mobile */
+    font-family: "Luxurious Roman", serif;
+    padding-right: 20px;
+}
+
+.desktop-running-line .separator {
+    font-weight: 900;
+    /* Bold circle */
+    padding-right: 50px;
+}
+
+@keyframes running-line {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}

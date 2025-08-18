@@ -2,41 +2,53 @@
 {% load static %}
 
 {% block content %}
-  <link rel="stylesheet" href="{% static 'css/homepage/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/homepage/home.css' %}">
 
-<section class="articles-container">
-    <img class="site-logo" src="{% static 'img/logo.png' %}">
-
-    {% for article in articles %}
-    <article class="article-card">
-      <a href="{% url 'articles:article-detail' article.pk %}" class="article-link">
-        <h2 class="article-title">{{ article.content|safe|striptags|truncatechars:65 }}</h2>
-      </a>
-      <p class="article-meta">{{ article.created_at|timesince }} ago</p>
-    </article>
-    {% endfor %}
-
-    <div class="view-all-wrapper">
-        <a href="{% url 'articles:article-list' %}" class="view-all-button">View all publications</a>
+<!-- templates/includes/text_blocks.html -->
+<div class="text-blocks-container">
+  <!-- Desktop Layout -->
+  <div class="text-blocks-desktop">
+    <div class="left-block">
+      <h2 class="block-title left-title">What are Slovenian cops doing during their free time?</h2>
+      <p class="block-text">Best donuts are sold in America meanwhile, in Italy the only alternative is "Coffee|Joint"
+        which would be great. However cops prefer to avoid that place because of its nominative. It triggers jealousy as
+        their farewell to a happy future.</p>
     </div>
-  </section>
-
-  <section class="featured-articles">
-    <article class="featured-main">
-      <h2>What are Slovenian cops doing during their free time?</h2>
-      <p>Best donuts are sold in America meanwhile, in Italy the only alternative if "Coffee|Joint" which would be great. However cops prefer to avoid that place because of it's nominative. It triggers jealousy as their farewell to a happy future</p>
-    </article>
-
-    <div class="featured-secondary">
-      <article class="featured-item">
-        <h2>Why Slovenian police exists if it has no use?</h2>
-        <p>This question is less philosophical then practical. Even though useless things such as slime, Tick-tock, Us dollar exist they still bring somewhat profit. Meanwhile Slovenian police brings only donuts to their station.</p>
-      </article>
-
-      <article class="featured-item">
-        <h2>Police in Nova Gorica are not payed enough</h2>
-        <p>They have to steal from poor citizens. Well if they did not have enough money they could just ask...</p>
-      </article>
+    <div class="right-blocks">
+      <div class="right-block top">
+        <h2 class="block-title">Why Slovenian police exists if it has no use?</h2>
+        <p class="block-text">This question is less philosophical then practical. Even though useless things such as
+          slime, Tick-tock, Us dollar exist they still bring somewhat profit. Meanwhile Slovenian police brings only
+          donuts to their station.</p>
+      </div>
+      <div class="right-block bottom">
+        <h2 class="block-title">Police in Nova Gorica are not payed enough</h2>
+        <p class="block-text">They have to steal from poor citizens. Well if they did not have enough money they could
+          just ask...</p>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <!-- Mobile Layout -->
+  <div class="text-blocks-mobile">
+    <div class="mobile-block">
+      <h2 class="block-title left-title">What are Slovenian cops doing during their free time?</h2>
+      <p class="block-text">Best donuts are sold in America meanwhile, in Italy the only alternative is "Coffee|Joint"
+        which would be great. However cops prefer to avoid that place because of its nominative. It triggers jealousy as
+        their farewell to a happy future.</p>
+    </div>
+    <div class="mobile-block">
+      <h2 class="block-title">Why Slovenian police exists if it has no use?</h2>
+      <p class="block-text">This question is less philosophical then practical. Even though useless things such as
+        slime, Tick-tock, Us dollar exist they still bring somewhat profit. Meanwhile Slovenian police brings only
+        donuts to their station.</p>
+    </div>
+    <div class="mobile-block">
+      <h2 class="block-title">Police in Nova Gorica are not payed enough</h2>
+      <p class="block-text">They have to steal from poor citizens. Well if they did not have enough money they could
+        just ask...</p>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

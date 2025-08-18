@@ -1,29 +1,3 @@
-/* Running Line - unchanged */
-.running-line-container {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  margin-bottom: 5px;
-}
-
-.running-line {
-  display: inline-block;
-  padding-left: 100%;
-  animation: running-line 60s linear infinite;
-}
-
-.running-line span {
-  font-size: 15px;
-  color: #8B8661;
-  font-family: "Luxurious Roman", serif;
-  padding-right: 50px;
-}
-
-@keyframes running-line {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
-
 /* Footer - adjusted for exact spacing */
 .figma-footer {
   background-color: #fff;
@@ -39,20 +13,23 @@
   display: flex;
   justify-content: space-around;
   align-items: start;
-  gap: 10rem; /* Uniform gap between all sections */
+  gap: 10rem;
+  /* Uniform gap between all sections */
 }
 
 .footer-brand {
   grid-column: 2;
   display: flex;
   flex-direction: column;
-  gap: 1rem; /* Space between RDE and social icons */
+  gap: 1rem;
+  /* Space between RDE and social icons */
 }
 
 .footer-logo {
   font-size: 2rem;
   color: #000;
-  margin: 0; /* Remove default margins */
+  margin: 0;
+  /* Remove default margins */
 }
 
 .social-icons {
@@ -63,7 +40,8 @@
 .footer-links {
   grid-column: 3;
   display: flex;
-  gap: 2rem; /* Space between nav columns */
+  gap: 2rem;
+  /* Space between nav columns */
 }
 
 .links-column {

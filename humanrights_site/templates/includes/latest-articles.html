@@ -1,0 +1,79 @@
+{% load static %}
+
+<link href="{% static 'css/includes/latest-articles.css' %}" rel="stylesheet">
+
+
+<div class="latest-articles-wrapper">
+    <!-- Mobile layout - logo above -->
+    <div class="latest-articles-mobile-logo d-block d-md-none">
+        <a href="{% url 'homepage:home' %}">
+            <img src="{% static 'img/logo.png' %}" alt="Site Logo" class="img-fluid">
+        </a>
+    </div>
+
+    <div class="latest-articles-container">
+        <!-- Desktop layout -->
+        <div class="latest-articles-desktop d-none d-md-flex">
+            {% for article in latest_articles|slice:":2" %}
+            <div class="latest-article-card">
+                <a href="{{ article.get_absolute_url }}">
+                    <div class="card-content">
+                        <h3 class="article-title" style="text-align: end;">{{ article.title|truncatechars:85 }}
+                        </h3>
+                        <p class="article-meta desktop-meta" style="text-align: end;">{{ article.created_at|timesince }}
+                            ago</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+
+            <div class="latest-articles-logo">
+                <a href="{% url 'homepage:home' %}">
+                    <img src="{% static 'img/logo.png' %}" alt="Site Logo" height="250">
+                </a>
+            </div>
+
+            {% for article in latest_articles|slice:"2:4" %}
+            <div class="latest-article-card" style="text-align: start;">
+                <a href="{{ article.get_absolute_url }}">
+                    <div class="card-content">
+                        <h3 class="article-title">{{ article.title|truncatechars:85 }}</h3>
+                        <p class="article-meta desktop-meta">{{ article.created_at|timesince }} ago</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Mobile layout - carousel -->
+        <div class="latest-articles-mobile d-flex d-md-none">
+            <button class="carousel-arrow left-arrow">
+                <img src="{% static 'img/scroll-arrow-left.png' %}" alt="Previous" class="arrow-img">
+            </button>
+
+            <div class="latest-articles-carousel">
+                {% for article in latest_articles %}
+                <div class="latest-article-card">
+                    <a href="{{ article.get_absolute_url }}">
+                        <h3 class="article-title">{{ article.title|truncatechars:85 }}</h3>
+                        <p class="article-meta">{{ article.created_at|timesince }} ago</p>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="carousel-arrow right-arrow">
+                <img src="{% static 'img/scroll-arrow-right.png' %}" alt="Next" class="arrow-img">
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="desktop-running-line-container">
+    <div class="desktop-running-line">
+        <span>IF A ONE-HUNDRED-PERCENT PROBABILITY EXISTS, THEN IT IS ACHIEVABLE</span>
+        <span class="separator">•</span>
+    </div>
+</div>
+
+<script src="{% static 'js/includes/latest-articles.js' %}"></script>

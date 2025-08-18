@@ -1,30 +1,34 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navList = document.querySelector('.main-nav ul');
+// static/js/includes/header.js
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.querySelector('.mobile-menu-toggle');
+    const mobileNav = document.querySelector('.mobile-nav');
 
-    menuToggle.addEventListener('click', function() {
-        navList.classList.toggle('show');
-    });
+    if (toggleButton && mobileNav) {
+        toggleButton.addEventListener('click', function () {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        });
 
-    // Search toggle
-    const searchToggle = document.querySelector('.search-toggle');
-    const searchBar = document.querySelector('.search-bar');
+        // Close when clicking on links
+        const navLinks = mobileNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                toggleButton.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
 
-    searchToggle.addEventListener('click', function() {
-        searchBar.classList.toggle('show');
-    });
-
-    // Close menus when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.header-actions') && !event.target.closest('.main-nav ul') && !event.target.closest('.search-bar')) {
-            navList.classList.remove('show');
-            searchBar.classList.remove('show');
-        }
-    });
-
-    // Prevent clicks inside the nav from closing it
-    document.querySelector('.main-nav').addEventListener('click', function(event) {
-        event.stopPropagation();
-    });
+        // Close when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!mobileNav.contains(e.target) &&
+                !toggleButton.contains(e.target) &&
+                mobileNav.classList.contains('active')) {
+                toggleButton.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
 });
