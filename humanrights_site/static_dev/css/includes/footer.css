@@ -25,9 +25,8 @@
   /* Space between RDE and social icons */
 }
 
-.footer-logo {
-  font-size: 2rem;
-  color: #000;
+.footer-logo img {
+  width: 40px;
   margin: 0;
   /* Remove default margins */
 }

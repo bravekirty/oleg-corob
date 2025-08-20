@@ -4,19 +4,6 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/articles/list.css' %}">
 
-<section class="articles-container">
-  <img class="site-logo" src="{% static 'img/logo.png' %}">
-
-  {% for article in latest %}
-  <article class="article-card">
-    <a href="{% url 'articles:article-detail' article.pk %}" class="article-link">
-      <h2 class="article-title">{{ article.content|safe|striptags|truncatechars:65 }}</h2>
-    </a>
-    <p class="article-meta">{{ article.created_at|timesince }} ago</p>
-  </article>
-  {% endfor %}
-</section>
-
 <!-- Articles Grid -->
 <div class="newspaper-articles-grid">
   {% for article in articles %}
@@ -37,30 +24,29 @@
   <div class="pagination-container">
     <!-- Previous Button -->
     <a href="?page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% else %}{{ page_obj.number }}{% endif %}"
-       class="pagination-arrow prev" title="Previous Page"
-       {% if not page_obj.has_previous %}disabled{% endif %}>
+      class="pagination-arrow prev" title="Previous Page" {% if not page_obj.has_previous %}disabled{% endif %}>
       ◀
     </a>
 
     <!-- Page Numbers -->
     <div class="pagination-numbers">
       {% for num in page_obj.paginator.page_range %}
-        {% if num == page_obj.number %}
-          <span class="page-number active">{{ num }}</span>
-        {% elif num <= 3 or num >= page_obj.paginator.num_pages|add:"-2" or num == page_obj.number|add:"-1" or num == page_obj.number|add:"1" %}
-          <a href="?page={{ num }}" class="page-number">{{ num }}</a>
+      {% if num == page_obj.number %}
+      <span class="page-number active">{{ num }}</span>
+      {% elif num <= 3 or num>= page_obj.paginator.num_pages|add:"-2" or num == page_obj.number|add:"-1" or num ==
+        page_obj.number|add:"1" %}
+        <a href="?page={{ num }}" class="page-number">{{ num }}</a>
         {% elif num == 4 and page_obj.number > 5 %}
-          <span class="page-ellipsis">...</span>
-        {% elif num == page_obj.paginator.num_pages|add:"-3" and page_obj.number < page_obj.paginator.num_pages|add:"-4" %}
-          <span class="page-ellipsis">...</span>
-        {% endif %}
-      {% endfor %}
+        <span class="page-ellipsis">...</span>
+        {% elif num == page_obj.paginator.num_pages|add:"-3" and page_obj.number < page_obj.paginator.num_pages|add:"-4"
+          %} <span class="page-ellipsis">...</span>
+          {% endif %}
+          {% endfor %}
     </div>
 
     <!-- Next Button -->
     <a href="?page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% else %}{{ page_obj.number }}{% endif %}"
-       class="pagination-arrow next" title="Next Page"
-       {% if not page_obj.has_next %}disabled{% endif %}>
+      class="pagination-arrow next" title="Next Page" {% if not page_obj.has_next %}disabled{% endif %}>
       ▶
     </a>
   </div>
@@ -73,13 +59,8 @@
     <!-- Search -->
     <div class="filter-group">
       <label for="search-input" class="filter-label">Search Articles</label>
-      <textarea
-        name="search"
-        class="filter-input"
-        id="search-input"
-        placeholder="Search titles or content..."
-        rows="4"
-      >{{ current_filters.search }}</textarea>
+      <textarea name="search" class="filter-input" id="search-input" placeholder="Search titles or content..."
+        rows="4">{{ current_filters.search }}</textarea>
     </div>
 
     <!-- Language -->
@@ -87,9 +68,9 @@
       <label for="language-select" class="filter-label">Filter by Language</label>
       <select name="language" id="language-select" class="filter-select" multiple>
         {% for code, name in LanguageChoices %}
-          <option value="{{ code }}" {% if code in current_filters.languages %}selected{% endif %}>
-            {{ name }}
-          </option>
+        <option value="{{ code }}" {% if code in current_filters.languages %}selected{% endif %}>
+          {{ name }}
+        </option>
         {% endfor %}
       </select>
       <span class="filter-hint">(Hold Ctrl/Cmd to select multiple)</span>
@@ -100,9 +81,9 @@
       <label for="topic-select" class="filter-label">Filter by Topic</label>
       <select name="topic" id="topic-select" class="filter-select" multiple>
         {% for code, name in TopicChoices %}
-          <option value="{{ code }}" {% if code in current_filters.topics %}selected{% endif %}>
-            {{ name }}
-          </option>
+        <option value="{{ code }}" {% if code in current_filters.topics %}selected{% endif %}>
+          {{ name }}
+        </option>
         {% endfor %}
       </select>
       <span class="filter-hint">(Hold Ctrl/Cmd to select multiple)</span>
@@ -113,11 +94,9 @@
       <label class="filter-label">Date Range</label>
       <div class="date-inputs">
         <label for="date-from" class="date-label">From</label>
-        <input type="date" name="date_from" id="date-from" class="filter-date"
-               value="{{ current_filters.date_from }}">
+        <input type="date" name="date_from" id="date-from" class="filter-date" value="{{ current_filters.date_from }}">
         <label for="date-to" class="date-label">To</label>
-        <input type="date" name="date_to" id="date-to" class="filter-date"
-               value="{{ current_filters.date_to }}">
+        <input type="date" name="date_to" id="date-to" class="filter-date" value="{{ current_filters.date_to }}">
       </div>
     </div>
 
@@ -125,10 +104,10 @@
     <div class="filter-group">
       <label for="sort-select" class="filter-label">Sort By</label>
       <select name="sort" id="sort-select" class="filter-select">
-        <option value="-created_at" {% if current_filters.sort == '-created_at' %}selected{% endif %}>
+        <option value="-created_at" {% if current_filters.sort=='-created_at' %}selected{% endif %}>
           Newest First
         </option>
-        <option value="created_at" {% if current_filters.sort == 'created_at' %}selected{% endif %}>
+        <option value="created_at" {% if current_filters.sort=='created_at' %}selected{% endif %}>
           Oldest First
         </option>
       </select>
