@@ -4,7 +4,6 @@
 .text-blocks-container {
   max-width: 1200px;
   margin: 2rem auto;
-  margin-top: 4rem;
   padding: 0 1rem;
 }
 
@@ -68,9 +67,8 @@
 }
 
 .mobile-block {
-  margin-bottom: 2rem;
   text-align: center;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .mobile-block .left-title {

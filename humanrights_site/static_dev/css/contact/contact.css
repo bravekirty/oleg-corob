@@ -279,4 +279,8 @@
   .info-grid {
     grid-template-columns: 1fr;
   }
+
+  .newspaper-contact-form {
+      margin-bottom: 0 !important;
+  }
 }

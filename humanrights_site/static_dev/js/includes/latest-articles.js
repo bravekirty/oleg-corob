@@ -42,20 +42,3 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const runningLine = document.querySelector('.desktop-running-line');
-        const text = runningLine.innerHTML;
-
-        // Duplicate content enough times to fill screen
-        runningLine.innerHTML = text.repeat(10);
-
-        // Calculate animation duration based on text width
-        const textWidth = runningLine.scrollWidth / 10;
-        const duration = textWidth / 10; // Adjust speed (50px per second)
-
-        runningLine.style.animationDuration = `${duration}s`;
-    });
-});
