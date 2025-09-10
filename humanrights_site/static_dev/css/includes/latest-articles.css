@@ -172,10 +172,6 @@
     .latest-articles-mobile {
         display: flex;
     }
-
-    .desktop-running-line-container {
-        display: none !important;
-    }
 }
 
 /* Hide scrollbar and prevent selection */
@@ -204,28 +200,26 @@
     white-space: nowrap;
     background-color: #EEE8A9;
     /* Same as mobile */
-    padding: 8px 0;
+    padding: 5px 0;
     margin-bottom: 5px;
+
 }
 
 .desktop-running-line {
-    display: inline-block;
+    display: flex;
     padding-left: 100%;
     animation: running-line 60s linear infinite;
 }
 
 .desktop-running-line span {
-    font-size: 15px;
+    font-size: 17px;
     color: #8B8661;
     /* Same as mobile */
     font-family: "Luxurious Roman", serif;
-    padding-right: 20px;
 }
 
 .desktop-running-line .separator {
-    font-weight: 900;
-    /* Bold circle */
-    padding-right: 50px;
+    margin: auto 20px;
 }
 
 @keyframes running-line {
