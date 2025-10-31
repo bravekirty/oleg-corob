@@ -1,38 +1,55 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-4">
     <div class="card shadow-sm">
-        <div class="card-header bg-secondary text-white">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <h2 class="mb-0"><i class="fas fa-file-alt me-2"></i>All Documents</h2>
+            {% if open_file_id %}
+            <div class="text-light small">
+                <i class="fas fa-external-link-alt me-1"></i>
+                Viewing: {{ open_file_name }}
+            </div>
+            {% endif %}
         </div>
-        
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead class="table-light">
                         <tr>
                             <th scope="col">Document</th>
-                            <th scope="col">Publication</th>
-                            <th scope="col">Read</th>
+                            <th scope="col" class="text-center">Publication</th>
+                            <th scope="col" class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for attachment in attachments %}
                         <tr>
                             <td>
-                                <i class="fas fa-file-pdf text-primary me-2"></i>
-                                <strong>{{ attachment.name }}</strong>
+                                {% if attachment.file.name|lower|slice:'-4:' == '.pdf' %}
+                                    <i class="fas fa-file-pdf text-danger me-2"></i>
+                                {% else %}
+                                    <i class="fas fa-file text-primary me-2"></i>
+                                {% endif %}
+                                <a href="#" class="text-decoration-none"
+                                   onclick="openAttachmentModal('{{ attachment.id }}', '{{ attachment.file.url }}', '{{ attachment.name|escapejs }}', '{{ attachment.file.name|lower|slice:'-4:' }}')">
+                                    <strong>{{ attachment.name|truncatewords:10 }}</strong>
+                                </a>
                             </td>
-                            <td>
+                            <td class="text-end">
                                 <a href="{% url 'articles:article-detail' attachment.article.id %}" class="text-decoration-none">
-                                    {{ attachment.article.title|truncatechars:30 }}
+                                    <strong>{{ attachment.article.title|truncatewords:10 }}</strong>
                                 </a>
                             </td>
-                            <td>
-                                <a href="{% url 'documents:attachment_view' attachment.id %}" class="text-decoration-none">
-                                    {{ attachment.name|truncatechars:30 }}
-                                </a>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary"
+                                            onclick="openAttachmentModal('{{ attachment.id }}', '{{ attachment.file.url }}', '{{ attachment.name|escapejs }}', '{{ attachment.file.name|lower|slice:'-4:' }}')">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         {% empty %}
@@ -48,13 +65,13 @@
                     </tbody>
                 </table>
             </div>
-            
+
             {% if is_paginated %}
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center mt-4">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if open_file_id %}&file={{ open_file_id }}{% endif %}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -65,18 +82,18 @@
                         </a>
                     </li>
                     {% endif %}
-                    
+
                     {% for num in page_obj.paginator.page_range %}
                     {% if page_obj.number == num %}
                     <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
                     {% else %}
-                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}{% if open_file_id %}&file={{ open_file_id }}{% endif %}">{{ num }}</a></li>
                     {% endif %}
                     {% endfor %}
-                    
+
                     {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if open_file_id %}&file={{ open_file_id }}{% endif %}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -93,4 +110,368 @@
         </div>
     </div>
 </div>
+
+<!-- Share Link Toast Notification -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="shareToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Share link copied to clipboard!
+        </div>
+    </div>
+</div>
+
+<!-- Attachment Viewer Modal -->
+<div class="modal fade" id="attachmentModal" tabindex="-1" aria-labelledby="attachmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-fullscreen-lg-down">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <div>
+                        <h5 class="modal-title" id="attachmentModalLabel">
+                            <i class="fas fa-file-pdf text-danger me-2"></i>
+                            <span id="modalFileName">Loading...</span>
+                        </h5>
+                        <div class="text-muted small mt-1">
+                            <span id="modalFileInfo"></span>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-outline-info btn-sm" onclick="copyCurrentShareLink()" title="Copy share link">
+                            <i class="fas fa-share-alt me-1"></i>Share
+                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body p-0">
+                <!-- PDF Viewer Section -->
+                <div id="pdfViewerSection" class="d-none h-100">
+                    <div class="d-flex flex-column h-100">
+                        <!-- PDF Controls -->
+                        <div class="bg-light border-bottom p-3">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <div class="btn-group" role="group">
+                                        <button id="prevPage" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-chevron-left me-1"></i>Previous
+                                        </button>
+                                        <span class="btn btn-light btn-sm" style="cursor: default;">
+                                            Page: <span id="pageNum">1</span> of <span id="pageCount">0</span>
+                                        </span>
+                                        <button id="nextPage" class="btn btn-outline-primary btn-sm">
+                                            Next <i class="fas fa-chevron-right me-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <div class="btn-group" role="group">
+                                        <button id="zoomOut" class="btn btn-outline-secondary btn-sm">
+                                            <i class="fas fa-search-minus"></i>
+                                        </button>
+                                        <span class="btn btn-light btn-sm" style="cursor: default;">
+                                            Zoom: <span id="zoomLevel">100%</span>
+                                        </span>
+                                        <button id="zoomIn" class="btn btn-outline-secondary btn-sm">
+                                            <i class="fas fa-search-plus"></i>
+                                        </button>
+                                        <button id="fitWidth" class="btn btn-outline-secondary btn-sm">
+                                            Fit Width
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PDF Canvas Container -->
+                        <div class="flex-grow-1 position-relative">
+                            <!-- Loading Spinner -->
+                            <div id="pdfLoading" class="position-absolute top-50 start-50 translate-middle text-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading PDF...</span>
+                                </div>
+                                <p class="mt-2">Loading PDF document...</p>
+                            </div>
+
+                            <!-- Error Message -->
+                            <div id="pdfError" class="alert alert-danger d-none position-absolute top-50 start-50 translate-middle">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <span id="errorText">Failed to load PDF document.</span>
+                            </div>
+
+                            <!-- PDF Canvas -->
+                            <div id="pdfViewerContainer" class="h-100 d-flex justify-content-center align-items-start p-3">
+                                <canvas id="pdfCanvas" class="border shadow-sm"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Non-PDF File Section -->
+                <div id="nonPdfSection" class="d-none">
+                    <div class="text-center py-5">
+                        <i class="fas fa-file fa-3x text-muted mb-3"></i>
+                        <h4>File Preview Not Available</h4>
+                        <p class="text-muted mb-4">
+                            This file type cannot be previewed in the browser. Please download the file to view it.
+                        </p>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-info" onclick="copyCurrentShareLink()">
+                                <i class="fas fa-share-alt me-1"></i>Share Link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Global variables for PDF.js
+let pdfDoc = null;
+let pageNum = 1;
+let pageRendering = false;
+let pageNumPending = null;
+let currentScale = 1.0;
+let currentAttachmentId = null;
+let currentAttachmentName = null;
+
+// Function to get share link
+function getShareLink(attachmentId) {
+    const baseUrl = window.location.origin + window.location.pathname;
+    return `${baseUrl}?file=${attachmentId}`;
+}
+
+// Function to copy share link to clipboard
+function copyShareLink(attachmentId, fileName) {
+    const shareLink = getShareLink(attachmentId);
+    navigator.clipboard.writeText(shareLink).then(function() {
+        showToast(`Share link for "${fileName}" copied to clipboard!`);
+    }).catch(function(err) {
+        console.error('Could not copy text: ', err);
+        showToast('Failed to copy share link', 'error');
+    });
+}
+
+// Function to copy current modal file share link
+function copyCurrentShareLink() {
+    if (currentAttachmentId) {
+        copyShareLink(currentAttachmentId, currentAttachmentName);
+    }
+}
+
+// Toast notification function
+function showToast(message, type = 'success') {
+    const toastEl = document.getElementById('shareToast');
+    const toastHeader = toastEl.querySelector('.toast-header');
+    const toastBody = toastEl.querySelector('.toast-body');
+
+    // Update toast content
+    toastBody.textContent = message;
+
+    // Update toast style based on type
+    if (type === 'error') {
+        toastHeader.className = 'toast-header bg-danger text-white';
+        toastHeader.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i><strong class="me-auto">Error</strong><button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>';
+    } else {
+        toastHeader.className = 'toast-header bg-success text-white';
+        toastHeader.innerHTML = '<i class="fas fa-check-circle me-2"></i><strong class="me-auto">Success</strong><button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>';
+    }
+
+    // Show toast
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+}
+
+function openAttachmentModal(attachmentId, fileUrl, fileName, fileExtension) {
+    currentAttachmentId = attachmentId;
+    currentAttachmentName = fileName;
+
+    // Update modal title and info
+    document.getElementById('modalFileName').textContent = fileName;
+    document.getElementById('modalFileInfo').textContent = 'Loading file information...';
+
+    // Update URL without reloading the page
+    const newUrl = getShareLink(attachmentId);
+    window.history.replaceState({}, '', newUrl);
+
+    // Show appropriate section based on file type
+    const isPdf = fileExtension === '.pdf';
+    const pdfViewerSection = document.getElementById('pdfViewerSection');
+    const nonPdfSection = document.getElementById('nonPdfSection');
+
+    if (isPdf) {
+        pdfViewerSection.classList.remove('d-none');
+        nonPdfSection.classList.add('d-none');
+        loadPdf(fileUrl, fileName);
+    } else {
+        pdfViewerSection.classList.add('d-none');
+        nonPdfSection.classList.remove('d-none');
+        document.getElementById('modalFileInfo').textContent = 'This file type requires download to view.';
+    }
+
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('attachmentModal'));
+    modal.show();
+}
+
+function loadPdf(pdfUrl, fileName) {
+    const canvas = document.getElementById('pdfCanvas');
+    const ctx = canvas.getContext('2d');
+    const pageNumEl = document.getElementById('pageNum');
+    const pageCountEl = document.getElementById('pageCount');
+    const zoomLevelEl = document.getElementById('zoomLevel');
+    const pdfViewerContainer = document.getElementById('pdfViewerContainer');
+    const pdfLoading = document.getElementById('pdfLoading');
+    const pdfError = document.getElementById('pdfError');
+    const errorText = document.getElementById('errorText');
+
+    // Reset state
+    pdfDoc = null;
+    pageNum = 1;
+    pageRendering = false;
+    pageNumPending = null;
+    currentScale = 1.0;
+
+    // Show loading, hide error and canvas
+    pdfLoading.classList.remove('d-none');
+    pdfError.classList.add('d-none');
+    canvas.style.visibility = 'hidden';
+
+    // Load the PDF
+    pdfjsLib.getDocument(pdfUrl).promise.then(
+        function(pdf) {
+            pdfDoc = pdf;
+            pageCountEl.textContent = pdfDoc.numPages;
+            pdfLoading.classList.add('d-none');
+            canvas.style.visibility = 'visible';
+            document.getElementById('modalFileInfo').textContent =
+                `PDF Document - ${pdfDoc.numPages} page${pdfDoc.numPages !== 1 ? 's' : ''}`;
+            renderPage(pageNum);
+        },
+        function(error) {
+            console.error("PDF load error:", error);
+            pdfLoading.classList.add('d-none');
+            errorText.textContent = error.message || "Failed to load PDF document.";
+            pdfError.classList.remove('d-none');
+            document.getElementById('modalFileInfo').textContent = 'Error loading PDF document';
+        }
+    );
+
+    // Render page function
+    function renderPage(num) {
+        pageRendering = true;
+        pdfDoc.getPage(num).then(
+            function(page) {
+                const viewport = page.getViewport({ scale: currentScale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+
+                page.render(renderContext).promise.then(function() {
+                    pageRendering = false;
+                    pageNumEl.textContent = num;
+                    zoomLevelEl.textContent = `${Math.round(currentScale * 100)}%`;
+
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            },
+            function(error) {
+                console.error("Page render error:", error);
+                pdfError.classList.remove('d-none');
+                errorText.textContent = "Error rendering this page.";
+            }
+        );
+    }
+
+    // Navigation controls
+    document.getElementById('prevPage').onclick = function() {
+        if (pageNum <= 1 || pageRendering) return;
+        pageNum--;
+        queueRenderPage(pageNum);
+    };
+
+    document.getElementById('nextPage').onclick = function() {
+        if (pageNum >= pdfDoc.numPages || pageRendering) return;
+        pageNum++;
+        queueRenderPage(pageNum);
+    };
+
+    // Zoom controls
+    document.getElementById('zoomIn').onclick = function() {
+        if (currentScale >= 3.0 || pageRendering) return;
+        currentScale += 0.25;
+        queueRenderPage(pageNum);
+    };
+
+    document.getElementById('zoomOut').onclick = function() {
+        if (currentScale <= 0.5 || pageRendering) return;
+        currentScale -= 0.25;
+        queueRenderPage(pageNum);
+    };
+
+    // Fit width function
+    document.getElementById('fitWidth').onclick = function() {
+        if (!pdfDoc || pageRendering) return;
+
+        pdfDoc.getPage(pageNum).then(function(page) {
+            const containerWidth = pdfViewerContainer.clientWidth - 40;
+            const pageWidth = page.getViewport({ scale: 1.0 }).width;
+            currentScale = containerWidth / pageWidth;
+            queueRenderPage(pageNum);
+        });
+    };
+
+    function queueRenderPage(num) {
+        if (pageRendering) {
+            pageNumPending = num;
+        } else {
+            renderPage(num);
+        }
+    }
+}
+
+// Clean up when modal is closed
+document.getElementById('attachmentModal').addEventListener('hidden.bs.modal', function() {
+    // Reset PDF.js state
+    pdfDoc = null;
+    pageNum = 1;
+    pageRendering = false;
+    pageNumPending = null;
+    currentScale = 1.0;
+
+    // Clear URL parameter when modal is closed
+    const baseUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, '', baseUrl);
+});
+
+// Auto-open modal if file parameter is present in URL
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const fileId = urlParams.get('file');
+
+    {% if open_file_id %}
+    // Auto-open the modal with the specified file
+    openAttachmentModal(
+        '{{ open_file_id }}',
+        '{{ open_file_url }}',
+        '{{ open_file_name|escapejs }}',
+        '{{ open_file_extension }}'
+    );
+    {% endif %}
+});
+</script>
 {% endblock %}
