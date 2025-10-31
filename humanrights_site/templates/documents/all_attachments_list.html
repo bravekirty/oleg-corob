@@ -14,8 +14,6 @@
                         <tr>
                             <th scope="col">Document</th>
                             <th scope="col">Publication</th>
-                            <th scope="col" class="text-end">Size</th>
-                            <th scope="col" class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,16 +24,8 @@
                                 <strong>{{ attachment.name }}</strong>
                             </td>
                             <td>
-                                <a href="{{ attachment.article.get_absolute_url }}" class="text-decoration-none">
+                                <a href="{% url 'documents:attachment_view' attachment.id %}" class="text-decoration-none">
                                     {{ attachment.article.title|truncatechars:30 }}
-                                </a>
-                            </td>
-                            <td class="text-end">
-                                {{ attachment.file.size|filesizeformat }}
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ attachment.file.url }}" class="" download>
-                                    <i class="fas fa-download"></i> Download
                                 </a>
                             </td>
                         </tr>

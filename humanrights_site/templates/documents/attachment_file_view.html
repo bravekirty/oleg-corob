@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <!-- Header Card -->
+    <div class="card mb-3">
+        <div class="card-body py-3">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'documents:all-attachments' %}" class="text-decoration-none">
+                                    <i class="fas fa-arrow-left me-1"></i>All Documents
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">{{ attachment.name }}</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-md-4 text-end">
+                        <a href="{% url 'articles:article-detail' attachment.article.id %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-newspaper me-1"></i>View Article
+                        </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Information -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="card-title">{{ attachment.name }}</h5>
+                            <p class="text-muted mb-1">
+                                <strong>Article:</strong>
+                                <a href="{% url 'articles:article-detail' attachment.article.id %}" class="text-decoration-none">
+                                    {{ attachment.article.title }}
+                                </a>
+                            </p>
+                            <p class="text-muted mb-0">
+                                <strong>Size:</strong> {{ attachment.file.size|filesizeformat }}
+                            </p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <p class="text-muted mb-1">
+                                <strong>Uploaded:</strong> {{ attachment.article.created_at|date:"F j, Y" }}
+                            </p>
+                            <p class="text-muted mb-0">
+                                <strong>Language:</strong>
+                                <span class="badge bg-secondary">{{ attachment.article.get_language_display }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Viewer for PDF files -->
+    {% if is_pdf %}
+    <div class="card">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">PDF Viewer</h5>
+            <div class="btn-group">
+                <button id="zoomOut" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button id="zoomIn" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button id="fitWidth" class="btn btn-sm btn-outline-secondary">
+                    Fit Width
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="text-center">
+                <!-- Loading Spinner -->
+                <div id="pdfLoading" class="my-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading PDF...</span>
+                    </div>
+                    <p class="mt-2">Loading PDF document...</p>
+                </div>
+
+                <!-- Error Message -->
+                <div id="pdfError" class="alert alert-danger d-none">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span id="errorText">Failed to load PDF document.</span>
+                </div>
+
+                <!-- PDF Controls -->
+                <div id="pdfControls" class="d-none mb-3">
+                    <div class="btn-group" role="group">
+                        <button id="prevPage" class="btn btn-outline-primary">
+                            <i class="fas fa-chevron-left me-1"></i>Previous
+                        </button>
+                        <span class="btn btn-light" style="cursor: default;">
+                            Page: <span id="pageNum">1</span> of <span id="pageCount">0</span>
+                        </span>
+                        <button id="nextPage" class="btn btn-outline-primary">
+                            Next <i class="fas fa-chevron-right me-1"></i>
+                        </button>
+                    </div>
+                    <span class="mx-3 text-muted">|</span>
+                    <span class="text-muted">
+                        Zoom: <span id="zoomLevel">100%</span>
+                    </span>
+                </div>
+
+                <!-- PDF Canvas -->
+                <div id="pdfViewerContainer" class="d-none">
+                    <canvas id="pdfCanvas" class="border shadow-sm"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Non-PDF files message -->
+    {% else %}
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <i class="fas fa-file fa-3x text-muted mb-3"></i>
+            <h4>File Preview Not Available</h4>
+            <p class="text-muted mb-4">
+                This file type cannot be previewed in the browser. Please download the file to view it.
+            </p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% if is_pdf %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('pdfCanvas');
+    const ctx = canvas.getContext('2d');
+    const pageNumEl = document.getElementById('pageNum');
+    const pageCountEl = document.getElementById('pageCount');
+    const zoomLevelEl = document.getElementById('zoomLevel');
+    const pdfViewerContainer = document.getElementById('pdfViewerContainer');
+    const pdfLoading = document.getElementById('pdfLoading');
+    const pdfError = document.getElementById('pdfError');
+    const pdfControls = document.getElementById('pdfControls');
+    const errorText = document.getElementById('errorText');
+
+    // PDF.js variables
+    let pdfDoc = null;
+    let pageNum = 1;
+    let pageRendering = false;
+    let pageNumPending = null;
+    let currentScale = 1.0;
+
+    // Initialize PDF
+    const pdfUrl = '{{ attachment.file.url }}';
+
+    pdfjsLib.getDocument(pdfUrl).promise.then(
+        function(pdf) {
+            pdfDoc = pdf;
+            pageCountEl.textContent = pdfDoc.numPages;
+            pdfLoading.classList.add('d-none');
+            pdfViewerContainer.classList.remove('d-none');
+            pdfControls.classList.remove('d-none');
+            renderPage(pageNum);
+        },
+        function(error) {
+            console.error("PDF load error:", error);
+            pdfLoading.classList.add('d-none');
+            errorText.textContent = error.message || "Failed to load PDF document.";
+            pdfError.classList.remove('d-none');
+        }
+    );
+
+    // Render page function
+    function renderPage(num) {
+        pageRendering = true;
+        pdfDoc.getPage(num).then(
+            function(page) {
+                const viewport = page.getViewport({ scale: currentScale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+
+                page.render(renderContext).promise.then(function() {
+                    pageRendering = false;
+                    pageNumEl.textContent = num;
+                    zoomLevelEl.textContent = `${Math.round(currentScale * 100)}%`;
+
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            },
+            function(error) {
+                console.error("Page render error:", error);
+                pdfError.classList.remove('d-none');
+                errorText.textContent = "Error rendering this page.";
+            }
+        );
+    }
+
+    // Navigation controls
+    document.getElementById('prevPage').addEventListener('click', function() {
+        if (pageNum <= 1) return;
+        pageNum--;
+        queueRenderPage(pageNum);
+    });
+
+    document.getElementById('nextPage').addEventListener('click', function() {
+        if (pageNum >= pdfDoc.numPages) return;
+        pageNum++;
+        queueRenderPage(pageNum);
+    });
+
+    // Zoom controls
+    document.getElementById('zoomIn').addEventListener('click', function() {
+        if (currentScale >= 3.0) return;
+        currentScale += 0.25;
+        queueRenderPage(pageNum);
+    });
+
+    document.getElementById('zoomOut').addEventListener('click', function() {
+        if (currentScale <= 0.5) return;
+        currentScale -= 0.25;
+        queueRenderPage(pageNum);
+    });
+
+    // Fit width function
+    document.getElementById('fitWidth').addEventListener('click', function() {
+        if (!pdfDoc) return;
+
+        pdfDoc.getPage(pageNum).then(function(page) {
+            const containerWidth = pdfViewerContainer.clientWidth - 40; // Account for padding
+            const pageWidth = page.getViewport({ scale: 1.0 }).width;
+            currentScale = containerWidth / pageWidth;
+            queueRenderPage(pageNum);
+        });
+    });
+
+    function queueRenderPage(num) {
+        if (pageRendering) {
+            pageNumPending = num;
+        } else {
+            renderPage(num);
+        }
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (pdfDoc && !pageRendering) {
+            renderPage(pageNum);
+        }
+    });
+});
+</script>
+{% endif %}
+{% endblock %}

@@ -16,7 +16,7 @@
         <div class="latest-articles-desktop d-none d-md-flex">
             {% for article in latest_articles|slice:":2" %}
             <div class="latest-article-card">
-                <a href="{{ article.get_absolute_url }}">
+                <a href="{% url 'articles:article-detail' article.id %}">
                     <div class="card-content">
                         <h3 class="article-title" style="text-align: end;">{{ article.title|truncatechars:85 }}
                         </h3>
@@ -35,7 +35,7 @@
 
             {% for article in latest_articles|slice:"2:4" %}
             <div class="latest-article-card" style="text-align: start;">
-                <a href="{{ article.get_absolute_url }}">
+                <a href="{% url 'articles:article-detail' article.id %}">
                     <div class="card-content">
                         <h3 class="article-title">{{ article.title|truncatechars:85 }}</h3>
                         <p class="article-meta desktop-meta">{{ article.created_at|timesince }} ago</p>
@@ -54,7 +54,7 @@
             <div class="latest-articles-carousel">
                 {% for article in latest_articles %}
                 <div class="latest-article-card">
-                    <a href="{{ article.get_absolute_url }}">
+                    <a href="{% url 'articles:article-detail' article.id %}">
                         <h3 class="article-title">{{ article.title|truncatechars:85 }}</h3>
                         <p class="article-meta">{{ article.created_at|timesince }} ago</p>
                     </a>

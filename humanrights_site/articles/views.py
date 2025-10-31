@@ -80,17 +80,3 @@ class ArticleDetailView(django.views.generic.DetailView):
     context_object_name = "article"
     slug_field = "id"
 
-
-
-def download_attachment(path):
-    file_path = django.conf.settings.MEDIA_ROOT / path
-    if file_path.exists():
-        return django.http.FileResponse(
-            file_path.open('rb'),
-            as_attachment=True,
-            filename=file_path.name,
-            content_type='image',
-        )
-
-    return django.http.HttpResponseNotFound('Файл не найден')
-
