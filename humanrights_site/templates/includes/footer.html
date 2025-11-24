@@ -41,15 +41,17 @@
 
     <!-- Links Columns -->
     <div class="links-column">
-      <h3 class="links-header">Topic</h3>
-      <a href="#" class="link-item">Page</a>
-      <a href="#" class="link-item">Page</a>
+      <h3 class="links-header">Navigation</h3>
+      <a href="{% url 'homepage:home' %}" class="link-item">Home</a>
+      <a href="{% url 'articles:article-list' %}" class="link-item">Publications</a>
+      <a href="{% url 'documents:all-attachments' %}" class="link-item">Documents</a>
     </div>
 
     <div class="links-column">
-      <h3 class="links-header">Topic</h3>
-      <a href="#" class="link-item">Page</a>
-      <a href="#" class="link-item">Page</a>
+      <h3 class="links-header">Contact</h3>
+      <a href="{% url 'contact:contact' %}" class="link-item">Contact</a>
+      <a href="tel:+11234567890" class="link-item">+1 (123) 456-78-90</a>
+      <a href="mailto:olegkorob.rde@gmail.com" class="link-item">olegkorob.rde@gmail.com</a>
     </div>
   </div>
 </footer>

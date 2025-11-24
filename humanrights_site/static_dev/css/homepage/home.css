@@ -1,96 +1,84 @@
-/* static/css/components/text_blocks.css */
+/* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Abel&display=swap');
 
+/* Title styling - Abril Fatface */
+.title-abril {
+  font-family: 'Abril Fatface', serif;
+  font-weight: 400; /* Regular */
+  font-size: 25px; /* Adjust based on your design */
+  line-height: 150%; /* ▲ 150% */
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Paragraph styling - Abel */
+.paragraph-abel {
+  font-family: 'Abel', sans-serif;
+  font-weight: 400; /* Regular */
+  font-size: 16px; /* Regular 16 */
+  line-height: 150%; /* 150% */
+  letter-spacing: 0%; /* 0% */
+  margin-bottom: 2rem;
+  text-align: justify;
+}
+
+/* Learn more link styling */
+.learn-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #AD9B15;
+  font-weight: 500;
+}
+
+.learn-more-link:hover {
+  opacity: 0.8;
+}
+
+.learn-more-link img {
+  width: 8px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.learn-more-link:hover img {
+  transform: translateX(4px);
+}
+
+/* Text blocks container */
 .text-blocks-container {
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-/* Desktop Layout */
-.text-blocks-desktop {
-  display: flex;
-  gap: 2rem;
-  align-items: stretch;
-  /* Equal height */
-}
-
-.left-block {
-  flex: 1;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  gap: 1rem;
-}
-
-.right-blocks {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.right-block {
-  padding: 1.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.block-title {
-  font-family: 'Abril Fatface', serif;
-  line-height: 1.3;
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.left-title {
-  font-size: 3.5rem;
-  /* Larger left title */
-}
-
-.right-block .block-title {
-  font-size: 1.8rem;
-}
-
-.block-text {
-  font-family: 'Abel', sans-serif;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #555;
-}
-
-/* Mobile Layout */
-.text-blocks-mobile {
-  display: none;
-}
-
-.mobile-block {
-  text-align: center;
-  padding: 0.5rem 1rem;
-}
-
-.mobile-block .left-title {
-  font-size: 1.8rem;
-  /* Slightly larger for mobile */
-}
-
-/* Responsive Breakpoint */
+/* Responsive design */
 @media (max-width: 768px) {
-  .text-blocks-desktop {
-    display: none;
+  .title-abril {
+    font-size: 1.8rem;
+    letter-spacing: 10px;
+    line-height: 140%;
   }
 
-  .text-blocks-mobile {
-    display: block;
+  .paragraph-abel {
+    font-size: 14px;
   }
 
-  .block-title {
+  .layout-image {
+    width: 100%;
+    height: auto;
+    max-width: 2186px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-abril {
     font-size: 1.5rem;
+    letter-spacing: 5px;
   }
 
-  .block-text {
-    font-size: 1rem;
+  .text-blocks-container {
+    padding: 1rem;
   }
 }
