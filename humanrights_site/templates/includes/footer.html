@@ -4,7 +4,22 @@
 
 <footer class="figma-footer container">
   <div class="footer-container">
+    <!-- Навигация слева -->
+    <div class="footer-links footer-navigation">
+      <div class="links-column">
+        <h3 class="links-header">Navigation</h3>
+        <a href="{% url 'homepage:home' %}" class="link-item">Home</a>
+        <a href="{% url 'articles:article-list' %}" class="link-item">Publications</a>
+        <a href="{% url 'documents:all-attachments' %}" class="link-item">Documents</a>
+      </div>
+    </div>
+
+    <!-- Картинка + текст по центру -->
     <div class="footer-brand">
+      <img src="{% static 'img/logo.png' %}" alt="Site Logo">
+      <p class="rde-letters">
+        RDE
+      </p>
       <p>
         RDE-Associazione di Promozione<br>
         Sociale-Ente del Terzo Settore
@@ -14,14 +29,25 @@
         30174 Venezia VE
       </p>
     </div>
-    <div class="footer-links">
+
+    <!-- Контакты справа -->
+    <div class="footer-links footer-contacts">
+      <div class="links-column">
+        <h3 class="links-header">Contact</h3>
+        <a href="{% url 'contact:contact' %}" class="link-item">Contact form</a>
+        <a href="tel:+11234567890" class="link-item">+39 (348) 606-74-52</a>
+        <a href="mailto:olegkorob.rde@gmail.com" class="link-item">rde@pec-mail.it</a>
+      </div>
+    </div>
+
+    <!-- Мобильная версия - Navigation и Contact в одной линии -->
+    <div class="footer-mobile-links">
       <div class="links-column">
         <h3 class="links-header">Navigation</h3>
         <a href="{% url 'homepage:home' %}" class="link-item">Home</a>
         <a href="{% url 'articles:article-list' %}" class="link-item">Publications</a>
         <a href="{% url 'documents:all-attachments' %}" class="link-item">Documents</a>
       </div>
-
       <div class="links-column">
         <h3 class="links-header">Contact</h3>
         <a href="{% url 'contact:contact' %}" class="link-item">Contact form</a>

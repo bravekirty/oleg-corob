@@ -11,29 +11,41 @@
   margin: 0 auto;
   padding: 0 1rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-around; /* Меняем на space-around */
   align-items: start;
-  gap: 10rem;
-  /* Uniform gap between all sections */
 }
 
+/* Десктоп: Navigation слева, бренд по центру, Contact справа */
 .footer-brand {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /* Space between RDE and social icons */
+  text-align: center;
+  font-family: 'Abril Fatface', serif;
+  flex: 1;
+  align-items: center;
+  position: relative;
+  min-height: 200px;
 }
 
-.footer-links {
+.footer-navigation {
+  flex: 1;
   display: flex;
-  gap: 6rem;
-  /* Space between nav columns */
+  justify-content: center; /* Центрируем навигацию */
+}
+
+.footer-contacts {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* Центрируем контакты */
 }
 
 .links-column {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  align-items: center; /* Центрируем пункты списка */
+  text-align: center; /* Центрируем текст */
 }
 
 .links-header {
@@ -49,58 +61,72 @@
   color: #666;
   text-decoration: none;
   transition: color 0.2s ease;
+  text-align: center; /* Центрируем текст ссылок */
 }
 
 .link-item:hover {
   color: #000;
 }
 
-/* Responsive */
+/* Картинка как подложка под текстом */
+.footer-brand img {
+    position: absolute;
+    opacity: 30%;
+    z-index: 1;
+    width: 250px;
+    top: calc(50% + 30px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.footer-brand .rde-letters {
+    font-family: 'Abril Fatface', serif;
+    letter-spacing: 7px;
+    font-size: 2rem;
+    color: #CCCB86;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-brand p {
+    position: relative;
+    z-index: 2;
+}
+
+/* Мобильная версия - ваш исходный вариант */
+/* Остальной CSS без изменений до мобильной версии */
+
+
+/* Десктоп версия */
+.footer-mobile-links {
+  display: none; /* Скрываем на десктопе */
+}
+
+/* Мобильная версия */
 @media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
+  .footer-navigation,
+  .footer-contacts {
+    display: none; /* Скрываем десктопные блоки */
+  }
+
+  .footer-mobile-links {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
     gap: 2rem;
-    padding: 0 1.5rem;
+    order: 2;
   }
 
   .footer-brand {
+    order: 1;
     text-align: center;
     width: 100%;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid #e0e0e0;
+    min-height: auto;
   }
 
-  .footer-links {
-    width: 100%;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .links-column {
-    flex: 1;
-    min-width: 140px;
-    text-align: center;
-  }
-
-  .running-line span {
-    font-size: 13px;
-  }
-}
-
-/* Additional mobile optimization for very small screens */
-@media (max-width: 480px) {
-  .footer-links {
+  .footer-container {
     flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .links-column {
-    min-width: 100%;
-    text-align: center;
-  }
-
-  .footer-brand {
-    padding-bottom: 1rem;
+    gap: 2rem;
   }
 }
