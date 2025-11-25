@@ -1,6 +1,18 @@
 /* static/css/components/header.css */
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Abel&display=swap');
 
+.yellow-line {
+  width: 100%;
+  height: 45px;
+  background-color: #EEE8A9;
+}
+
+.green-line {
+  width: 100%;
+  height: 12px;
+  background-color: #CBD054;
+}
+
 /* ===== Base Styles ===== */
 .site-header {
     position: relative;

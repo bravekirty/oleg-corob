@@ -56,13 +56,11 @@
 /* Responsive design */
 @media (max-width: 768px) {
   .title-abril {
-    font-size: 1.8rem;
-    letter-spacing: 10px;
-    line-height: 140%;
+    font-size: 20px;
   }
 
   .paragraph-abel {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .layout-image {

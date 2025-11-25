@@ -297,3 +297,16 @@
     height: auto;
 }
 
+.slogan h2 {
+    font-family: "Abril Fatface", serif;
+    font-size: 2rem;
+    color: #CCCB86;
+    text-align: center;
+}
+
+.slogan p {
+    font-family: "Abril Fatface", serif;
+    font-size: 1rem;
+    color: #CCCB86;
+    text-align: center;
+}

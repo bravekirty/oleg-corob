@@ -13,9 +13,10 @@
                 <table class="table table-hover">
                     <thead class="table-light">
                         <tr>
-                            <th scope="col">Document</th>
-                            <th scope="col" class="text-center">Publication</th>
-                            <th scope="col" class="text-center">View</th>
+                            <th scope="col">name</th>
+                            <th scope="col" class="text-center">publication</th>
+                            <th scope="col" class="text-center">date</th>
+                            <th scope="col" class="text-center">actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,15 +28,17 @@
                                 {% else %}
                                     <i class="fas fa-file text-primary me-2"></i>
                                 {% endif %}
-                                <a href="#" class="text-decoration-none"
-                                   onclick="openAttachmentModal('{{ attachment.id }}', '{{ attachment.file.url }}', '{{ attachment.name|escapejs }}', '{{ attachment.file.name|lower|slice:'-4:' }}')">
-                                    <strong>{{ attachment.name|truncatewords:10 }}</strong>
-                                </a>
+                                    <strong>
+                                        {{ attachment.name|truncatewords:10 }}
+                                    </strong>
                             </td>
                             <td class="text-end">
                                 <a href="{% url 'articles:article-list' %}" class="text-decoration-none">
                                     <strong>{{ attachment.article.title|truncatewords:10 }}</strong>
                                 </a>
+                            </td>
+                            <td class="text-center">
+                                <strong>{{ attachment.article.created_at|date:"d.m.Y" }}</strong>
                             </td>
                             <td class="text-center">
                                 <div class="btn-group btn-group-sm">
@@ -55,7 +58,6 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <div class="table-bottom-block"></div>
             </div>
 
             {% if is_paginated %}
