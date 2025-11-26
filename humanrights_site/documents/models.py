@@ -18,6 +18,7 @@ class Attachment(django.db.models.Model):
         max_length=100,
         blank=True,
     )
+    order = django.db.models.IntegerField()
 
     def __str__(self):
         return self.name if self.name else f"Attachment {self.id}"

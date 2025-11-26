@@ -1,3 +1,6 @@
 /.venv/
+/venv/
 /.idea/
-
+/humanrights_site/static_dev/
+/humanrights_site/db.sqlite3
+/humanrights_site/media/
